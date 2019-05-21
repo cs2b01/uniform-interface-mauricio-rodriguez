@@ -4,3 +4,6 @@
 ```
 pip install sqlAlchemy
 ```
+```
+pip3 install sqlAlchemy
+```
