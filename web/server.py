@@ -14,11 +14,19 @@ def index():
 
 
 @app.route('/books')
-def users():
+def books():
     db_session = db.getSession(engine)
     users = db_session.query(entities.Book)
     data = users[:]
     return Response(json.dumps(data, cls=connector.AlchemyEncoder), mimetype = 'application/json')
+
+@app.route('/users')
+def users():
+    db_session = db.getSession(engine)
+    users = db_session.query(entities.User)
+    data = users[:]
+    return Response(json.dumps(data, cls=connector.AlchemyEncoder), mimetype = 'application/json')
+
 
 @app.route('/create_test_books', methods = ['GET'])
 def create_test_books():
@@ -27,6 +35,15 @@ def create_test_books():
     db_session.add(book)
     db_session.commit()
     return "Test books created!"
+
+
+@app.route('/create_test_users', methods = ['GET'])
+def create_test_users():
+    db_session = db.getSession(engine)
+    user = entities.User(name="David", apellido="Lazo", codigo="1234", password="qwerty")
+    db_session.add(user)
+    db_session.commit()
+    return "Test user created!"
 
 if __name__ == '__main__':
     app.secret_key = ".."
